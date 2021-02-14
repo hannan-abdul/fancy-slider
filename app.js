@@ -37,7 +37,7 @@ const showImages = (images) => {
   images.forEach(image => {
     let div = document.createElement('div');
     div.className = 'col-lg-3 col-md-4 col-xs-6 img-item mb-2';
-    div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
+    div.innerHTML = ` <img class="img-fluid img-thumbnail custom-design" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
     gallery.appendChild(div);
     
   })
@@ -77,6 +77,11 @@ const createSlider = () => {
   // hide image aria
   imagesArea.style.display = 'none';
   const duration = document.getElementById('duration').value || 1000;
+  // duration fix 
+  if (duration< 0) {
+    alert("Value Can't be Negative")
+    return;
+  }
   sliders.forEach(slide => {
     let item = document.createElement('div')
     item.className = "slider-item";
@@ -136,10 +141,4 @@ const toggleSpinner = () => {
   const imageContainer = document.getElementById('image-container');
   spinner.classList.toggle('d-none');
   imageContainer.classList.toggle('d-none');
-  // if(show){
-  //       spinner.classList.remove('d-none');
-  //   }
-  //   else{
-  //       spinner.classList.add('d-none');
-  //   }
 }

@@ -47,13 +47,13 @@ const showImages = (images) => {
 let slideIndex = 0;
 const selectItem = (event, img) => {
   let element = event.target;
-  element.classList.add('added');
+  element.classList.toggle('added');
  
   let item = sliders.indexOf(img);
   if (item === -1) {
     sliders.push(img);
   } else {
-    alert('Hey, Already added !')
+    // alert('Hey, Already added !')
   }
 }
 var timer
@@ -133,9 +133,9 @@ sliderBtn.addEventListener('click', function () {
 // spinner 
 const toggleSpinner = () => {
   const spinner = document.getElementById('loading-spinner');
-  // const imageContainer = document.getElementById('image-container');
+  const imageContainer = document.getElementById('image-container');
   spinner.classList.toggle('d-none');
-  // imageContainer.classList.toggle('d-none');
+  imageContainer.classList.toggle('d-none');
   // if(show){
   //       spinner.classList.remove('d-none');
   //   }

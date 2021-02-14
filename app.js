@@ -7,11 +7,25 @@ const sliderContainer = document.getElementById('sliders');
 // selected image 
 let sliders = [];
 
-
 // If this key doesn't work
 // Find the name in the url and go to their website
 // to create your own api key
 const KEY = '15674931-a9d714b6e9d654524df198e00&q';
+
+  // enter key button 
+document.getElementById("search").addEventListener("keypress", function (event) {
+  if (event.key == 'Enter') {
+      document.getElementById("search-btn").click();
+  }
+});
+
+const getImages = (query) => {
+  toggleSpinner();
+  fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
+    .then(response => response.json())
+    .then(data => showImages(data.hits))
+    .catch(err => console.log(err))
+}
 
 // show images 
 const showImages = (images) => {
@@ -24,16 +38,10 @@ const showImages = (images) => {
     let div = document.createElement('div');
     div.className = 'col-lg-3 col-md-4 col-xs-6 img-item mb-2';
     div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
-    gallery.appendChild(div)
+    gallery.appendChild(div);
+    
   })
-
-}
-
-const getImages = (query) => {
-  fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
-    .then(response => response.json())
-    .then(data => showImages(data.hits))
-    .catch(err => console.log(err))
+  toggleSpinner();
 }
 
 let slideIndex = 0;
@@ -75,7 +83,7 @@ const createSlider = () => {
     item.innerHTML = `<img class="w-100"
     src="${slide}"
     alt="">`;
-    sliderContainer.appendChild(item)
+    sliderContainer.appendChild(item);
   })
   changeSlide(0)
   timer = setInterval(function () {
@@ -121,3 +129,17 @@ searchBtn.addEventListener('click', function () {
 sliderBtn.addEventListener('click', function () {
   createSlider()
 })
+
+// spinner 
+const toggleSpinner = () => {
+  const spinner = document.getElementById('loading-spinner');
+  // const imageContainer = document.getElementById('image-container');
+  spinner.classList.toggle('d-none');
+  // imageContainer.classList.toggle('d-none');
+  // if(show){
+  //       spinner.classList.remove('d-none');
+  //   }
+  //   else{
+  //       spinner.classList.add('d-none');
+  //   }
+}
